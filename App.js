@@ -13,25 +13,23 @@ export default class App extends React.Component {
 
   onLayoutCalled() {
     let markers = this.state.markers;
+    const latLng = {
+      latitude: 53.2734,
+      longitude: -7.77832031
+    };
     markers.push(
       (
         <MapView.Marker
-          coordinate={{
-            latitude: 53.2734,
-            longitude: -7.77832031
-          }}
-          title={"TT"}
-          description={"des"}
+          coordinate={latLng}
+          title={"Example Marker"}
+          description={"Marker Description"}
           key={1}
         />
       )
     );
-    //
+
     if(this.mapRef) {
-      // this.mapRef.fitToSuppliedMarkers(
-      //   markers,
-      //   true, // not animated
-      // );
+      this.mapRef.animateToCoordinate(latLng, 1);
       console.log('Map is loaded');
     } else {
       console.log('Map is not loaded yet');
@@ -41,18 +39,27 @@ export default class App extends React.Component {
     });
   }
 
+  regionChanged(event){
+    console.log('region changed');
+    console.log(this.mapRef.region);
+    console.log(event);
+  }
+
   render() {
     return (
         <MapView ref={(ref) => { this.mapRef = ref }}
             style={styles.map}
             onLayout={this.onLayoutCalled.bind(this)}
+            onRegionChange={this.regionChanged.bind(this)}
             provider={PROVIDER_GOOGLE}
-            initialRegion={{
-              latitude: 53.2734,
-              longitude: -7.77832031,
-              latitudeDelta: 1.1922,
-              longitudeDelta: 5.0421,
-            }}
+            initialRegion={
+              {
+                "latitude": 53.47314036728332,
+                "latitudeDelta": 6.261443390392806,
+                "longitude": -7.968024406582117,
+                "longitudeDelta": 5.928222723305225,
+              }
+            }
           >
             { this.state.markers }
           </MapView>
