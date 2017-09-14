@@ -27,13 +27,6 @@ export default class App extends React.Component {
         />
       )
     );
-
-    if(this.mapRef) {
-      this.mapRef.animateToCoordinate(latLng, 1);
-      console.log('Map is loaded');
-    } else {
-      console.log('Map is not loaded yet');
-    }
     this.setState({
         markers : markers
     });
@@ -52,7 +45,7 @@ export default class App extends React.Component {
             onLayout={this.onLayoutCalled.bind(this)}
             onRegionChange={this.regionChanged.bind(this)}
             provider={PROVIDER_GOOGLE}
-            initialRegion={
+            region={
               {
                 "latitude": 53.47314036728332,
                 "latitudeDelta": 6.261443390392806,
